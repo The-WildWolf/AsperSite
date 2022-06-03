@@ -45,8 +45,9 @@ def post_new(request):
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
 
+
 def search(request):
-    query=request.GET['query']
-    allPosts= Post.objects.filter(title__icontains=query)
-    params={'allPosts': allPosts}
+    query = request.GET['query']
+    allPosts = Post.objects.filter(title__icontains=query)
+    params = {'allPosts': allPosts}
     return render(request, 'blog/search.html', params)
