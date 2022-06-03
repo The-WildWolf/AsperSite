@@ -11,7 +11,10 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    comments = get_list_or_404(Comment)
+    try:
+        comments = get_list_or_404(Comment, post_id=pk)
+    except:
+        pass
     form = CommentForm(request.POST)
 
     if form.is_valid():
@@ -23,7 +26,10 @@ def post_detail(request, pk):
             name=name, email=email, content=content, post=post
         )
         return redirect('post_detail', pk=post.pk)
-    return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments})
+    try:
+        return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments})
+    except UnboundLocalError:
+        return render(request, 'blog/post_detail.html', {'post': post})
 
 
 def post_new(request):
