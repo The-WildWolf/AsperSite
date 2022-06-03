@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block title %} Search Results {% endblock title %}
+{% block blogactive %} active {% endblock blogactive %}
+
+
+{% block content %}
+<div class="container my-3">
+    <h2>Search results : </h2>
+    {% for post in allPosts  %}
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
+        <div class="col-md-4 p-4 d-flex flex-column position-static">
+            <h3 class="mb-0">
+                <a class="text-dark" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }} by {{post.author}}</a>
+            </h3>
+            <div class="mb-1 text-muted">{{post.published_date}}</div>
+            <p class="card-text mb-auto">{{post.text| truncatechars:255}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+ {% endblock %}
