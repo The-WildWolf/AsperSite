@@ -1,7 +1,7 @@
 from django.utils import timezone
-from .models import Post
-from django.shortcuts import render, get_object_or_404, redirect
-from .forms import PostForm
+from .models import Post, Comment
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from .forms import PostForm, CommentForm
 
 
 def post_list(request):
@@ -11,7 +11,19 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    comments = get_list_or_404(Comment)
+    form = CommentForm(request.POST)
+
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        content = form.cleaned_data['content']
+
+        Comment.objects.create(
+            name=name, email=email, content=content, post=post
+        )
+        return redirect('post_detail', pk=post.pk)
+    return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments})
 
 
 def post_new(request):
