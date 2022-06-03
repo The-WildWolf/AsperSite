@@ -11,7 +11,12 @@
 }
 
 .content {
-    margin-left: 40px;
+    font-size: 16px;
+	margin: 2em auto;
+	max-width: 800px;
+	padding: 1em;
+	line-height: 1.4;
+	text-align: justify
 }
 
 h1, h2, h3, h4 {
@@ -45,6 +50,6 @@ h1, h2, h3, h4 {
     color: #000000;
 }
 
-.featured-image-list{
-    object-fit: cover;
+.fit-article {
+    width:100%;
 }
